@@ -1,6 +1,6 @@
 {
   "name": "zebedee-node",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "NodeJS SDK for ZEBEDEE Lightning API",
   "main": "lib/index.js",
   "author": {
@@ -9,7 +9,6 @@
     "name": "André Neves"
   },
   "scripts": {
-    "start": "",
     "flow:precommit": "glow",
     "build": "babel src/ -d lib/"
   },
@@ -22,7 +21,7 @@
     "bitcoin",
     "microtransactions"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0"
   },

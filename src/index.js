@@ -1,9 +1,10 @@
+
 // Imports
 import axios from 'axios';
 import crypto from 'crypto';
 
 // Constants
-const VERSION = 'v0.1.0';
+const VERSION = 'v0.1.2';
 const API_URL = 'https://api.zebedee.io/api/v1';
 const DEV_API_URL = 'https://dev-api.zebedee.io/api/v1';
 const PROD_ENV = 'PRODUCTION';
@@ -32,11 +33,35 @@ type PaymentType = {
   internalId: string,
 };
 
+type APIType = {
+  apiKey: string,
+  environment: API_URL | DEV_API_URL,
+};
+
+type ErrorType = {
+  name: string,
+  error: Object,
+  status: number,
+};
+
 // Globals
 let api = null;
 let key = null;
 
-const newError = (statusCode, statusText, message) => {
+/**
+ * Creates Error Utility
+ *
+ * @param {string} statusCode - HTTP Status Code
+ * @param {string} statusText - Error Text
+ * @param {string} message - Error Message
+ * @returns {ErrorType} Error
+ *
+ */
+const newError = (
+  statusCode: number,
+  statusText: string,
+  message: string,
+): ErrorType => {
   const error = new Error(message);
   error.name = statusText;
   error.status = statusCode;
@@ -44,12 +69,21 @@ const newError = (statusCode, statusText, message) => {
   return error;
 };
 
+/**
+ * Initialize ZEBEDEE API with Credentials
+ *
+ * @param {APIType} apiOptions - Options to initialize the API
+ *
+ */
 const initAPI = ({
   apiKey = '',
   environment = PROD_ENV,
-}) => {
+}: APIType) => {
   // Setting Globals
   key = apiKey;
+
+  // API Base URL
+  const baseURL = (environment === PROD_ENV) ? API_URL : DEV_API_URL;
 
   // Default API Headers
   const defaultHeaders = {
@@ -57,10 +91,8 @@ const initAPI = ({
     'Content-Type': 'application/json',
     Authorization: apiKey,
     user_agent: VERSION,
+    Host: [baseURL],
   };
-
-  // API Base URL
-  const baseURL = (environment === PROD_ENV) ? API_URL : DEV_API_URL;
 
   // API Instance
   api = axios.create({
@@ -70,6 +102,13 @@ const initAPI = ({
   });
 };
 
+/**
+ * Create New Charge
+ *
+ * @param {ChargeType} charge - Charge object
+ * @returns {(Object|ErrorType)} Charge Details or Error
+ *
+ */
 const createCharge = async (charge: ChargeType) => {
   try {
     const response = await api.post(CHARGES_ENDPOINT, charge);
@@ -83,6 +122,13 @@ const createCharge = async (charge: ChargeType) => {
   }
 };
 
+/**
+ * Retrieves Charge Details
+ *
+ * @param {string} chargeId - the ID of the Charge
+ * @returns {(Object|ErrorType)} Charge Details or Error
+ *
+ */
 const getChargeDetails = async (chargeId: string) => {
   try {
     const response = await api.get(`${CHARGES_ENDPOINT}/${chargeId}`);
@@ -96,6 +142,12 @@ const getChargeDetails = async (chargeId: string) => {
   }
 };
 
+/**
+ * Retrieves Charges
+ *
+ * @returns {(Object|ErrorType)} Charges List or Error
+ *
+ */
 const getChargeList = async () => {
   try {
     const response = await api.get(CHARGES_ENDPOINT);
@@ -109,6 +161,13 @@ const getChargeList = async () => {
   }
 };
 
+/**
+ * Make Payment
+ *
+ * @param {PaymentType} payment - Payment object
+ * @returns {(Object|ErrorType)} Payment Details or Error
+ *
+ */
 const makePayment = async (payment: PaymentType) => {
   try {
     const response = await api.post(PAYMENTS_ENDPOINT, payment);
@@ -122,6 +181,13 @@ const makePayment = async (payment: PaymentType) => {
   }
 };
 
+/**
+ * Retrieves Payment Details
+ *
+ * @param {string} paymentId - the ID of the Payment
+ * @returns {(Object|ErrorType)} Payment Details or Error
+ *
+ */
 const getPaymentDetails = async (paymentId: string) => {
   try {
     const response = await api.get(`${PAYMENTS_ENDPOINT}/${paymentId}`);
@@ -135,6 +201,12 @@ const getPaymentDetails = async (paymentId: string) => {
   }
 };
 
+/**
+ * Retrieves Payments
+ *
+ * @returns {(Object|ErrorType)} Payments List or Error
+ *
+ */
 const getPaymentsList = async () => {
   try {
     const response = await api.get(PAYMENTS_ENDPOINT);
@@ -148,7 +220,13 @@ const getPaymentsList = async () => {
   }
 };
 
-const checkSignature = async (charge: ChargeType) => {
+/**
+ * Validates ZEBEDEE Signature
+ *
+ * @return {Object} A good string
+ *
+ */
+const validateCharge = async (charge: ChargeType) => {
   const hash = crypto
     .createHmac('sha256', key)
     .update(charge.id)
@@ -165,5 +243,5 @@ export {
   makePayment,
   getPaymentDetails,
   getPaymentsList,
-  checkSignature,
+  validateCharge,
 };
