@@ -35,7 +35,7 @@ type PaymentType = {
 
 type APIType = {
   apiKey: string,
-  environment: API_URL | DEV_API_URL,
+  env: API_URL | DEV_API_URL,
 };
 
 type ErrorType = {
@@ -77,13 +77,13 @@ const newError = (
  */
 const initAPI = ({
   apiKey = '',
-  environment = PROD_ENV,
+  env = PROD_ENV,
 }: APIType) => {
   // Setting Globals
   key = apiKey;
 
   // API Base URL
-  const baseURL = (environment === PROD_ENV) ? API_URL : DEV_API_URL;
+  const baseURL = (env === PROD_ENV) ? API_URL : DEV_API_URL;
 
   // Default API Headers
   const defaultHeaders = {
