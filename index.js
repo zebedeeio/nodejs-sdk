@@ -116,12 +116,16 @@ export const initAPI = ({ apikey = '' }: APIConfigurationType) => {
     apikey,
   };
 
+  console.log({ apikey, baseURL });
+
   // Axios API Instance
   zAPI = axios.create({
     baseURL,
     headers: defaultHeaders,
     timeout: 10000,
   });
+
+  console.log({ zAPI });
 };
 
 /**
@@ -149,6 +153,7 @@ export const getWalletDetails = async () => {
  * @returns {(ChargeResponseType|ErrorType)} Charge Information or Error
  */
 export const createCharge = async (chargeParams: ChargeInputType) => {
+  console.log({ zAPI });
   try {
     const response = await zAPI.post(CHARGES_ENDPOINT, chargeParams);
     const chargeDetails: ChargeResponseType = response.data.data;
