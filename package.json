@@ -1,22 +1,23 @@
 {
   "name": "zebedee-nodejs",
-  "version": "0.2.2",
-  "description": "NodeJS SDK for ZEBEDEE Lightning API",
+  "version": "0.2.4",
+  "description": "NodeJS SDK for ZEBEDEE Bitcoin Lightning API",
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib.js",
   "author": {
     "email": "andre@zebedee.io",
     "url": "https://zebedee.io",
     "name": "André Neves"
   },
   "scripts": {
-    "flow:precommit": "glow"
+    "flow:precommit": "glow",
+    "build": "babel index.js -d lib.js"
   },
   "engines": {
 		"node": ">=10"
   },
   "files": [
-    "index.js"
+    "lib.js"
   ],
   "pre-commit": [
     "flow:precommit"

@@ -11,7 +11,7 @@ const PAYMENTS_ENDPOINT = '/v0/payments';
 const WITHDRAWAL_REQUESTS_ENDPOINT = '/v0/withdrawal-requests';
 
 // Types
-export type ChargeInputType = {
+type ChargeInputType = {
   name: string,
   amount: string,
   internalId: string,
@@ -19,7 +19,7 @@ export type ChargeInputType = {
   description: string,
 };
 
-export type ChargeResponseType = {
+type ChargeResponseType = {
   id: string,
   name: string,
   unit: string,
@@ -35,7 +35,7 @@ export type ChargeResponseType = {
   },
 };
 
-export type WithdrawalRequestType = {
+type WithdrawalRequestType = {
   id: string,
   name: string,
   unit: string,
@@ -51,32 +51,32 @@ export type WithdrawalRequestType = {
   },
 };
 
-export type PaymentType = {
+type PaymentType = {
   walletId: string,
   invoiceId: string,
   entityId: string,
   internalId: string,
 };
 
-export type APIConfigurationType = {
+type APIConfigurationType = {
   apikey: string,
 };
 
-export type ErrorType = {
+type ErrorType = {
   name: string,
   error: Object,
   status: number,
 };
 
-export type PaymentInputType = {}
+type PaymentInputType = {}
 
-export type PaymentResponseType = {}
+type PaymentResponseType = {}
 
-export type WalletResponseType = {}
+type WalletResponseType = {}
 
-export type WithdrawalRequestInputType = {}
+type WithdrawalRequestInputType = {}
 
-export type WithdrawalRequestResponseType = {}
+type WithdrawalRequestResponseType = {}
 
 // Globals
 let zAPI: Object = null;
