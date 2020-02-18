@@ -1,10 +1,12 @@
 # ZEBEDEE NodeJS SDK
 
+[![npm version](https://badge.fury.io/js/zebedee-nodejs.svg)](https://badge.fury.io/js/zebedee-nodejs)
+
 NodeJS SDK to integrate ZEBEDEE Lightning microtransactions into your game or application with ease.
 
 ## Documentation
 
-For detailed information about the endpoints available in the ZEBEDEE platform please refer to our [Documentation Website](https://postman.zebedee.team).
+For detailed information about the endpoints available in the ZEBEDEE platform please refer to our [Documentation Website](https://beta-docs.zebedee.io).
 
 ## Installation
 
