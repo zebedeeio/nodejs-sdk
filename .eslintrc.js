@@ -12,6 +12,7 @@ module.exports = {
   parser: 'babel-eslint',
   rules: {
     strict: 0,
+    'max-len': 120,
     'import/prefer-default-export': 0,
   },
 };

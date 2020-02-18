@@ -1,96 +1,50 @@
+// @flow
 
-// Core Imports
+
 import axios from 'axios';
 
+import { throwError } from './utils';
+import type {
+  ChargeInputType,
+  PaymentInputType,
+  WalletResponseType,
+  ChargeResponseType,
+  PaymentResponseType,
+  APIConfigurationType,
+  WithdrawalRequestInputType,
+  WithdrawalRequestResponseType,
+} from './types';
+
 // Constants
-const API_URL = 'https://kong-qa.zebedee.cloud:8000/';
-const PROD_ENV = 'PRODUCTION';
+const API_URL = 'https://beta-api.zebedee.io';
 
 // Endpoints
 const WALLET_ENDPOINT = '/v0/wallet';
 const CHARGES_ENDPOINT = '/v0/charges';
-const WITHDRAWAL_REQUEST_ENDPOINT = '/v0/withdrawal-requests';
-const CREATE_WITHDRAWAL_REQUEST_ENDPOINT = '/v0/withdrawal-requests-create';
-const PAYMENTS_ENDPOINT = '/payments';
-
-// Types
-type ChargeType = {
-  name: string,
-  description: string,
-  amount: number,
-  successUrl: string,
-  callbackUrl: string,
-  emailReceipt: string,
-  entityId: string,
-  internalId: string,
-};
-
-type PaymentType = {
-  walletId: string,
-  invoiceId: string,
-  entityId: string,
-  internalId: string,
-};
-
-type APIType = {
-  apiKey: string,
-  env: API_URL | DEV_API_URL,
-};
-
-type ErrorType = {
-  name: string,
-  error: Object,
-  status: number,
-};
+const PAYMENTS_ENDPOINT = '/v0/payments';
+const WITHDRAWAL_REQUESTS_ENDPOINT = '/v0/withdrawal-requests';
 
 // Globals
-let api = null;
-let key = null;
+let zAPI: Object = null;
 
 /**
- * Creates Error Utility
- *
- * @param {string} statusCode - HTTP Status Code
- * @param {string} statusText - Error Text
- * @param {string} message - Error Message
- * @returns {ErrorType} Error
- *
+ * Instantiates an Axios API instance connected to the ZEBEDEE API
+ * @param {APIConfigurationType} apiConfig API Configuration Options
+ * @returns {any} Axios API Instance
  */
-const newError = (
-  statusCode: number,
-  statusText: string,
-  message: string,
-): ErrorType => {
-  const error = new Error(message);
-  error.name = statusText;
-  error.status = statusCode;
-
-  return error;
-};
-
-/**
- * Initialize ZEBEDEE API with API Key Credentials
- *
- * @param {APIType} apiOptions - Options to initialize the API
- *
- */
-const initAPI = ({ apiKey = '' }: APIType) => {
-  // Setting Globals
-  key = apiKey;
-
+const initAPI = ({ apikey = '' }: APIConfigurationType) => {
   // API Base URL
   const baseURL = API_URL;
 
-  // Default API Headers
+  // Default ZEBEDEE API Headers
   const defaultHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: apiKey,
-    Host: [baseURL],
+    apikey,
   };
 
-  // API Instance
-  api = axios.create({
+  // Axios API Instance
+  zAPI = axios.create({
     baseURL,
     headers: defaultHeaders,
     timeout: 10000,
@@ -98,18 +52,17 @@ const initAPI = ({ apiKey = '' }: APIType) => {
 };
 
 /**
- * Create New Charge
- *
- * @param {ChargeType} charge - Charge object
- * @returns {(Object|ErrorType)} Charge Details or Error
- *
+ * Retrieves Wallet Details
+ * @returns {(WalletResponseType|ErrorType)} Wallet Information or Error
  */
-const createCharge = async (charge: ChargeType) => {
+const getWalletDetails = async () => {
   try {
-    const response = await api.post(CHARGES_ENDPOINT, charge);
-    return response.data.data;
+    const response = await zAPI.get(WALLET_ENDPOINT);
+    const walletDetails: WalletResponseType = response.data.data;
+
+    return walletDetails;
   } catch (error) {
-    throw newError(
+    throw throwError(
       error.response.status,
       error.response.statusText,
       error.response.data.message,
@@ -118,18 +71,57 @@ const createCharge = async (charge: ChargeType) => {
 };
 
 /**
- * Retrieves Charge Details
- *
- * @param {string} chargeId - the ID of the Charge
- * @returns {(Object|ErrorType)} Charge Details or Error
- *
+ * Creates a New Charge
+ * @param {ChargeInputType} chargeParams Parameters for the Charge
+ * @returns {(ChargeResponseType|ErrorType)} Charge Information or Error
+ */
+const createCharge = async (chargeParams: ChargeInputType) => {
+  try {
+    const response = await zAPI.post(CHARGES_ENDPOINT, chargeParams);
+    const chargeDetails: ChargeResponseType = response.data.data;
+
+    return chargeDetails;
+  } catch (error) {
+    throw throwError(
+      error.response.status,
+      error.response.statusText,
+      error.response.data.message,
+    );
+  }
+};
+
+/**
+ * Retrieves All Charges
+ * @returns {(Array<ChargeResponseType>|ErrorType)} List of All Charges or Error
+ */
+const getAllCharges = async () => {
+  try {
+    const response = await zAPI.get(CHARGES_ENDPOINT);
+    const allCharges: Array<ChargeResponseType> = response.data.data;
+
+    return allCharges;
+  } catch (error) {
+    throw throwError(
+      error.response.status,
+      error.response.statusText,
+      error.response.data.message,
+    );
+  }
+};
+
+/**
+ * Retrieves Single Charge Details
+ * @param {string} chargeId The Charge ID
+ * @returns {(ChargeResponseType|ErrorType)} Charge Details or Error
  */
 const getChargeDetails = async (chargeId: string) => {
   try {
-    const response = await api.get(`${CHARGES_ENDPOINT}/${chargeId}`);
-    return response.data.data;
+    const response = await zAPI.get(`${CHARGES_ENDPOINT}/${chargeId}`);
+    const chargeDetails: ChargeResponseType = response.data.data;
+
+    return chargeDetails;
   } catch (error) {
-    throw newError(
+    throw throwError(
       error.response.status,
       error.response.statusText,
       error.response.data.message,
@@ -138,17 +130,18 @@ const getChargeDetails = async (chargeId: string) => {
 };
 
 /**
- * Retrieves Charges
- *
- * @returns {(Object|ErrorType)} Charges List or Error
- *
+ * Creates a New Withdrawal Request
+ * @param {WithdrawalRequestInputType} withdrawalRequestParams Parameters for the Withdrawal Request
+ * @returns {(WithdrawalRequestResponseType|ErrorType)} Charge Information or Error
  */
-const getChargeList = async () => {
+const createWithdrawalRequest = async (withdrawalRequestParams: WithdrawalRequestInputType) => {
   try {
-    const response = await api.get(CHARGES_ENDPOINT);
-    return response.data.data;
+    const response = await zAPI.post(WITHDRAWAL_REQUESTS_ENDPOINT, withdrawalRequestParams);
+    const withdrawalRequest: WithdrawalRequestResponseType = response.data.data;
+
+    return withdrawalRequest;
   } catch (error) {
-    throw newError(
+    throw throwError(
       error.response.status,
       error.response.statusText,
       error.response.data.message,
@@ -157,18 +150,17 @@ const getChargeList = async () => {
 };
 
 /**
- * Make Payment
- *
- * @param {PaymentType} payment - Payment object
- * @returns {(Object|ErrorType)} Payment Details or Error
- *
+ * Retrieves All WithdrawalRequests
+ * @returns {(Array<WithdrawalRequestResponseType>|ErrorType)} List of All Withdrawal Requests or Error
  */
-const makePayment = async (payment: PaymentType) => {
+const getAllWithdrawalRequests = async () => {
   try {
-    const response = await api.post(PAYMENTS_ENDPOINT, payment);
-    return response.data.data;
+    const response = await zAPI.get(WITHDRAWAL_REQUESTS_ENDPOINT);
+    const allWithdrawalRequests: Array<WithdrawalRequestResponseType> = response.data.data;
+
+    return allWithdrawalRequests;
   } catch (error) {
-    throw newError(
+    throw throwError(
       error.response.status,
       error.response.statusText,
       error.response.data.message,
@@ -177,18 +169,77 @@ const makePayment = async (payment: PaymentType) => {
 };
 
 /**
- * Retrieves Payment Details
- *
- * @param {string} paymentId - the ID of the Payment
+ * Retrieves Single Withdrawal Request Details
+ * @param {string} withdrawalRequestId The Withdrawal Request ID
+ * @returns {(WithdrawalRequestResponseType|ErrorType)} Withdrawal Request Details or Error
+ */
+const getWithdrawalRequestDetails = async (withdrawalRequestId: string) => {
+  try {
+    const response = await zAPI.get(`${WITHDRAWAL_REQUESTS_ENDPOINT}/${withdrawalRequestId}`);
+    const withdrawalRequestDetails: WithdrawalRequestResponseType = response.data.data;
+
+    return withdrawalRequestDetails;
+  } catch (error) {
+    throw throwError(
+      error.response.status,
+      error.response.statusText,
+      error.response.data.message,
+    );
+  }
+};
+
+/**
+ * Makes Payment for BOLT11 Invoice
+ * @param {PaymentInputType} payment - Payment object
  * @returns {(Object|ErrorType)} Payment Details or Error
- *
+ */
+const makePayment = async (payment: PaymentInputType) => {
+  try {
+    const response = await zAPI.post(PAYMENTS_ENDPOINT, payment);
+    const paymentDetails: PaymentResponseType = response.data.data;
+
+    return paymentDetails;
+  } catch (error) {
+    throw throwError(
+      error.response.status,
+      error.response.statusText,
+      error.response.data.message,
+    );
+  }
+};
+
+/**
+ * Retrieves All Payments
+ * @returns {(Array<PaymentResponseType>|ErrorType)} Payments List or Error
+ */
+const getAllPayments = async () => {
+  try {
+    const response = await zAPI.get(PAYMENTS_ENDPOINT);
+    const allPayments: Array<PaymentResponseType> = response.data.data;
+
+    return allPayments;
+  } catch (error) {
+    throw throwError(
+      error.response.status,
+      error.response.statusText,
+      error.response.data.message,
+    );
+  }
+};
+
+/**
+ * Retrieves Single Payment Details
+ * @param {string} paymentId The Payment ID
+ * @returns {(PaymentResponseType|ErrorType)} Payment Details or Error
  */
 const getPaymentDetails = async (paymentId: string) => {
   try {
-    const response = await api.get(`${PAYMENTS_ENDPOINT}/${paymentId}`);
-    return response.data.data;
+    const response = await zAPI.get(`${PAYMENTS_ENDPOINT}/${paymentId}`);
+    const paymentDetails: PaymentResponseType = response.data.data;
+
+    return paymentDetails;
   } catch (error) {
-    throw newError(
+    throw throwError(
       error.response.status,
       error.response.statusText,
       error.response.data.message,
@@ -196,32 +247,22 @@ const getPaymentDetails = async (paymentId: string) => {
   }
 };
 
-/**
- * Retrieves Payments
- *
- * @returns {(Object|ErrorType)} Payments List or Error
- *
- */
-const getPaymentsList = async () => {
-  try {
-    const response = await api.get(PAYMENTS_ENDPOINT);
-    return response.data.data;
-  } catch (error) {
-    throw newError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
-  }
-};
 
 export {
+  // API Initi
   initAPI,
+  // Wallet
+  getWalletDetails,
+  // Charges
   createCharge,
+  getAllCharges,
   getChargeDetails,
-  getChargeList,
+  // Withdrawal Requests
+  createWithdrawalRequest,
+  getAllWithdrawalRequests,
+  getWithdrawalRequestDetails,
+  // Payments
   makePayment,
+  getAllPayments,
   getPaymentDetails,
-  getPaymentsList,
-  validateCharge,
 };
