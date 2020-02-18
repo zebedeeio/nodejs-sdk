@@ -1,6 +1,6 @@
 {
-  "name": "zebedee-node",
-  "version": "0.1.2",
+  "name": "zebedee-nodejs",
+  "version": "0.2.0",
   "description": "NodeJS SDK for ZEBEDEE Lightning API",
   "main": "lib/index.js",
   "author": {
