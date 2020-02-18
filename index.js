@@ -88,14 +88,11 @@ let zAPI: Object = null;
  * @param {string} message - Error Message
  * @returns {ErrorType} Error
  */
-const throwError = (
-  statusCode: number,
-  statusText: string,
-  message: string,
-): ErrorType => {
-  const error: Object = new Error(message);
-  error.name = statusText;
-  error.status = statusCode;
+const throwError = (error: ErrorType): ErrorType => {
+  console.log({ error });
+  // const error: Object = new Error(message);
+  // error.name = statusText;
+  // error.status = statusCode;
 
   return error;
 };
@@ -116,16 +113,12 @@ export const initAPI = ({ apikey = '' }: APIConfigurationType) => {
     apikey,
   };
 
-  console.log({ apikey, baseURL });
-
   // Axios API Instance
   zAPI = axios.create({
     baseURL,
     headers: defaultHeaders,
     timeout: 10000,
   });
-
-  console.log({ zAPI });
 };
 
 /**
@@ -139,11 +132,7 @@ export const getWalletDetails = async () => {
 
     return walletDetails;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -153,18 +142,13 @@ export const getWalletDetails = async () => {
  * @returns {(ChargeResponseType|ErrorType)} Charge Information or Error
  */
 export const createCharge = async (chargeParams: ChargeInputType) => {
-  console.log({ zAPI });
   try {
     const response = await zAPI.post(CHARGES_ENDPOINT, chargeParams);
     const chargeDetails: ChargeResponseType = response.data.data;
 
     return chargeDetails;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -179,11 +163,7 @@ export const getAllCharges = async () => {
 
     return allCharges;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -199,11 +179,7 @@ export const getChargeDetails = async (chargeId: string) => {
 
     return chargeDetails;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -219,11 +195,7 @@ export const createWithdrawalRequest = async (withdrawalRequestParams: Withdrawa
 
     return withdrawalRequest;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -238,11 +210,7 @@ export const getAllWithdrawalRequests = async () => {
 
     return allWithdrawalRequests;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -258,11 +226,7 @@ export const getWithdrawalRequestDetails = async (withdrawalRequestId: string) =
 
     return withdrawalRequestDetails;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -278,11 +242,7 @@ export const makePayment = async (payment: PaymentInputType) => {
 
     return paymentDetails;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -297,11 +257,7 @@ export const getAllPayments = async () => {
 
     return allPayments;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
 
@@ -317,10 +273,6 @@ export const getPaymentDetails = async (paymentId: string) => {
 
     return paymentDetails;
   } catch (error) {
-    throw throwError(
-      error.response.status,
-      error.response.statusText,
-      error.response.data.message,
-    );
+    throw throwError(error);
   }
 };
