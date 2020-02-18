@@ -1,7 +1,8 @@
 {
   "name": "zebedee-nodejs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "NodeJS SDK for ZEBEDEE Lightning API",
+  "license": "MIT",
   "main": "index.js",
   "author": {
     "email": "andre@zebedee.io",
@@ -9,21 +10,28 @@
     "name": "André Neves"
   },
   "scripts": {
-    "flow:precommit": "glow",
-    "build": "babel src/ -d lib/",
-    "cp:json": "cp ./package.json /lib/package.json",
-    "ship:npm": "yarn run build && yarn cp:json && cd lib && npm publish"
+    "flow:precommit": "glow"
   },
+  "engines": {
+		"node": ">=10"
+  },
+  "files": [
+    "index.js",
+    "types.js",
+    "utils.js"
+  ],
   "pre-commit": [
     "flow:precommit"
   ],
   "keywords": [
     "lightning-network",
+    "microtransactions",
     "lightning",
     "bitcoin",
-    "microtransactions"
+    "zebedee",
+    "nodejs",
+    "sdk"
   ],
-  "license": "MIT",
   "dependencies": {
     "axios": "^0.19.0"
   },
