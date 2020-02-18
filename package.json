@@ -1,6 +1,6 @@
 {
   "name": "zebedee-nodejs",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "NodeJS SDK for ZEBEDEE Bitcoin Lightning API",
   "license": "MIT",
   "main": "lib.js",
@@ -11,7 +11,8 @@
   },
   "scripts": {
     "flow:precommit": "glow",
-    "build": "babel index.js -d lib.js"
+    "prebuild": "rm -rf lib.js",
+    "build": "babel index.js --out-file lib.js"
   },
   "engines": {
 		"node": ">=10"
