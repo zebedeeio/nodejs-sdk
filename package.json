@@ -16,9 +16,7 @@
 		"node": ">=10"
   },
   "files": [
-    "index.js",
-    "types.js",
-    "utils.js"
+    "index.js"
   ],
   "pre-commit": [
     "flow:precommit"
