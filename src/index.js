@@ -1,17 +1,16 @@
 
-// Imports
+// Core Imports
 import axios from 'axios';
-import crypto from 'crypto';
 
 // Constants
-const VERSION = 'v0.1.2';
-const API_URL = 'https://api.zebedee.io/api/v1';
-const DEV_API_URL = 'https://dev-api.zebedee.io/api/v1';
+const API_URL = 'https://kong-qa.zebedee.cloud:8000/';
 const PROD_ENV = 'PRODUCTION';
-// const DEV_ENV = 'DEVELOPMENT';
 
 // Endpoints
-const CHARGES_ENDPOINT = '/charges';
+const WALLET_ENDPOINT = '/v0/wallet';
+const CHARGES_ENDPOINT = '/v0/charges';
+const WITHDRAWAL_REQUEST_ENDPOINT = '/v0/withdrawal-requests';
+const CREATE_WITHDRAWAL_REQUEST_ENDPOINT = '/v0/withdrawal-requests-create';
 const PAYMENTS_ENDPOINT = '/payments';
 
 // Types
@@ -70,27 +69,23 @@ const newError = (
 };
 
 /**
- * Initialize ZEBEDEE API with Credentials
+ * Initialize ZEBEDEE API with API Key Credentials
  *
  * @param {APIType} apiOptions - Options to initialize the API
  *
  */
-const initAPI = ({
-  apiKey = '',
-  env = PROD_ENV,
-}: APIType) => {
+const initAPI = ({ apiKey = '' }: APIType) => {
   // Setting Globals
   key = apiKey;
 
   // API Base URL
-  const baseURL = (env === PROD_ENV) ? API_URL : DEV_API_URL;
+  const baseURL = API_URL;
 
   // Default API Headers
   const defaultHeaders = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     Authorization: apiKey,
-    user_agent: VERSION,
     Host: [baseURL],
   };
 
@@ -218,21 +213,6 @@ const getPaymentsList = async () => {
       error.response.data.message,
     );
   }
-};
-
-/**
- * Validates ZEBEDEE Signature
- *
- * @return {Object} A good string
- *
- */
-const validateCharge = async (charge: ChargeType) => {
-  const hash = crypto
-    .createHmac('sha256', key)
-    .update(charge.id)
-    .digest('hex');
-
-  return hash === charge.hashed_order;
 };
 
 export {
