@@ -1,8 +1,8 @@
 {
   "name": "zebedee-nodejs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "NodeJS SDK for ZEBEDEE Lightning API",
-  "main": "lib/index.js",
+  "main": "index.js",
   "author": {
     "email": "andre@zebedee.io",
     "url": "https://zebedee.io",
@@ -10,7 +10,9 @@
   },
   "scripts": {
     "flow:precommit": "glow",
-    "build": "babel src/ -d lib/"
+    "build": "babel src/ -d lib/",
+    "cp:json": "cp ./package.json /lib/package.json",
+    "ship:npm": "yarn run build && yarn cp:json && cd lib && npm publish"
   },
   "pre-commit": [
     "flow:precommit"
@@ -23,8 +25,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.0",
-    "flow-typed": "^2.6.2"
+    "axios": "^0.19.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
@@ -42,6 +43,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "flow-bin": "^0.112.0",
+    "flow-typed": "^2.6.2",
     "glow": "^1.2.2",
     "pre-commit": "^1.2.2",
     "prettier": "^1.19.1"
