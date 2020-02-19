@@ -11,6 +11,21 @@ const PAYMENTS_ENDPOINT = '/v0/payments';
 const WITHDRAWAL_REQUESTS_ENDPOINT = '/v0/withdrawal-requests';
 
 // Types
+type APIConfigurationType = {
+  apikey: string,
+};
+
+type ErrorResponseType = {
+  name: string,
+  status: number,
+  message: string,
+};
+
+type ErrorInputType = {
+  status: string,
+  response: Object,
+};
+
 type ChargeInputType = {
   name: string,
   amount: string,
@@ -35,7 +50,15 @@ type ChargeResponseType = {
   },
 };
 
-type WithdrawalRequestType = {
+type WithdrawalRequestInputType = {
+  name: string,
+  amount: string,
+  internalId: string,
+  callbackUrl: string,
+  description: string,
+}
+
+type WithdrawalRequestResponseType = {
   id: string,
   name: string,
   unit: string,
@@ -49,46 +72,40 @@ type WithdrawalRequestType = {
     request: string,
     expiresAt: string,
   },
-};
+}
 
-type PaymentType = {
-  walletId: string,
-  invoiceId: string,
-  entityId: string,
+type PaymentInputType = {
+  invoice: string,
   internalId: string,
-};
+  description: string,
+}
 
-type APIConfigurationType = {
-  apikey: string,
-};
+type PaymentResponseType = {
+  id: string,
+  fee: string,
+  unit: string,
+  status: string,
+  amount: string,
+  invoice: string,
+  internalId: string,
+  processedAt: string,
+  description: string,
+}
 
-type ErrorType = {
-  name: string,
-  error: Object,
-  status: number,
-};
-
-type PaymentInputType = {}
-
-type PaymentResponseType = {}
-
-type WalletResponseType = {}
-
-type WithdrawalRequestInputType = {}
-
-type WithdrawalRequestResponseType = {}
+type WalletResponseType = {
+  balance: string,
+  unit: string,
+}
 
 // Globals
 let zAPI: Object = null;
 
 /**
- * Utility for handling of Errors
- * @param {string} statusCode - HTTP Status Code
- * @param {string} statusText - Error Text
- * @param {string} message - Error Message
- * @returns {ErrorType} Error
+ * Utility for handling and formatting Errors
+ * @param {ErrorInputType} error Errror
+ * @returns {ErrorResponseType} Formatted Error
  */
-const throwError = (error: Object): ErrorType => {
+const throwError = (error: ErrorInputType): ErrorResponseType => {
   const errorMessage = error.response.data.errorString;
   const errorName = error.response.data.message;
   const errorStatus = error.response.status;
@@ -128,7 +145,7 @@ export const initAPI = ({ apikey = '' }: APIConfigurationType) => {
 
 /**
  * Retrieves Wallet Details
- * @returns {(WalletResponseType|ErrorType)} Wallet Information or Error
+ * @returns {(Object|ErrorResponseType)} Wallet Information or Error
  */
 export const getWalletDetails = async () => {
   try {
@@ -144,7 +161,7 @@ export const getWalletDetails = async () => {
 /**
  * Creates a New Charge
  * @param {ChargeInputType} chargeParams Parameters for the Charge
- * @returns {(ChargeResponseType|ErrorType)} Charge Information or Error
+ * @returns {(Object|ErrorResponseType)} Charge Information or Error
  */
 export const createCharge = async (chargeParams: ChargeInputType) => {
   try {
@@ -159,7 +176,7 @@ export const createCharge = async (chargeParams: ChargeInputType) => {
 
 /**
  * Retrieves All Charges
- * @returns {(Array<ChargeResponseType>|ErrorType)} List of All Charges or Error
+ * @returns {(Object|ErrorResponseType)} List of All Charges or Error
  */
 export const getAllCharges = async () => {
   try {
@@ -175,7 +192,7 @@ export const getAllCharges = async () => {
 /**
  * Retrieves Single Charge Details
  * @param {string} chargeId The Charge ID
- * @returns {(ChargeResponseType|ErrorType)} Charge Details or Error
+ * @returns {(Object|ErrorResponseType)} Charge Details or Error
  */
 export const getChargeDetails = async (chargeId: string) => {
   try {
@@ -191,7 +208,7 @@ export const getChargeDetails = async (chargeId: string) => {
 /**
  * Creates a New Withdrawal Request
  * @param {WithdrawalRequestInputType} withdrawalRequestParams Parameters for the Withdrawal Request
- * @returns {(WithdrawalRequestResponseType|ErrorType)} Charge Information or Error
+ * @returns {(Object|ErrorResponseType)} Charge Information or Error
  */
 export const createWithdrawalRequest = async (withdrawalRequestParams: WithdrawalRequestInputType) => {
   try {
@@ -206,7 +223,7 @@ export const createWithdrawalRequest = async (withdrawalRequestParams: Withdrawa
 
 /**
  * Retrieves All WithdrawalRequests
- * @returns {(Array<WithdrawalRequestResponseType>|ErrorType)} List of All Withdrawal Requests or Error
+ * @returns {(Object|ErrorResponseType)} List of All Withdrawal Requests or Error
  */
 export const getAllWithdrawalRequests = async () => {
   try {
@@ -222,7 +239,7 @@ export const getAllWithdrawalRequests = async () => {
 /**
  * Retrieves Single Withdrawal Request Details
  * @param {string} withdrawalRequestId The Withdrawal Request ID
- * @returns {(WithdrawalRequestResponseType|ErrorType)} Withdrawal Request Details or Error
+ * @returns {(Object|ErrorResponseType)} Withdrawal Request Details or Error
  */
 export const getWithdrawalRequestDetails = async (withdrawalRequestId: string) => {
   try {
@@ -238,7 +255,7 @@ export const getWithdrawalRequestDetails = async (withdrawalRequestId: string) =
 /**
  * Makes Payment for BOLT11 Invoice
  * @param {PaymentInputType} payment - Payment object
- * @returns {(Object|ErrorType)} Payment Details or Error
+ * @returns {(Object|ErrorResponseType)} Payment Details or Error
  */
 export const makePayment = async (payment: PaymentInputType) => {
   try {
@@ -253,7 +270,7 @@ export const makePayment = async (payment: PaymentInputType) => {
 
 /**
  * Retrieves All Payments
- * @returns {(Array<PaymentResponseType>|ErrorType)} Payments List or Error
+ * @returns {(Object|ErrorResponseType)} Payments List or Error
  */
 export const getAllPayments = async () => {
   try {
@@ -269,7 +286,7 @@ export const getAllPayments = async () => {
 /**
  * Retrieves Single Payment Details
  * @param {string} paymentId The Payment ID
- * @returns {(PaymentResponseType|ErrorType)} Payment Details or Error
+ * @returns {(Object|ErrorResponseType)} Payment Details or Error
  */
 export const getPaymentDetails = async (paymentId: string) => {
   try {
