@@ -29,9 +29,7 @@ yarn add zebedee-nodejs
 import { initAPI } from 'zebedee-node';
 
 // Configure the API (API Keys available at the ZEBEDEE Developers Dashboard)
-const apiOptions = {
-  apiKey: 'XXXXXX',
-};
+const apiOptions = { apiKey: 'XXXXXX' };
 
 // Instantiate the API
 initAPI(apiOptions);
@@ -45,11 +43,11 @@ import { createCharge } from 'zebedee-nodejs';
 
 // Set the payload
 const payload = {
-  name: 'Optional Name',
-  description: 'This is a Lightning charge',
-  amount: 5000,
-  callbackUrl: 'https://yourapp.com/zebedee-charge/callback',
-  internalId: 'YOUR INTERNAL SYSTEM\'S ID',
+  expiresIn: 300,
+  amount: "50000",
+  description: 'My Custom Charde Description',
+  callbackUrl: 'https://yourapp.com/callback',
+  internalId: '11af01d092444a317cb33faa6b8304b8',
 };
 
 // Create Charge
@@ -57,21 +55,20 @@ try {
   const response = await createCharge(payload);
 
   // Response Example
+  //
   // {
-  //   "message": "Successfully created Charge.",
-  //   "data": {
-  //     "id": "e4e2afc8-f469-4d4d-aeba-8c25957134ad",
-  //     "name": "Optional Name",
-  //     "description": "This is a Lightning charge",
-  //     "createdAt": "2020-01-06T15:21:30.437Z",
-  //     "callbackUrl": "https://yourapp.com/zebedee-charge/callback",
-  //     "internalId": "YOUR INTERNAL SYSTEM\'S ID",
-  //     "amount": "5000",
-  //     "status": "pending",
-  //     "invoice": {
-  //       "expiresAt": "2020-01-06T15:31:30.442Z",
-  //       "request": "lnbc50n1p0px5r6pp5f2zlacfd974742r5w6tnp66jch6u38nz03gy82xuzrczuc4cywqsdq4f4ujqnn9wusyx6rpwfnk2cqzpgxqzjc9qy9qsqsp57xlerer20wufen50grclt3np5rm640yfve72mvaqu096pthtt8vqjj0pvpfxft4nmqxx3w6klsw80f625qfdkveedehur8wumgkzq9lsz6z5tk9afsnnuzusd2qtrczkuyu9sn8c30f3ldg584y6a2mhvfgqc3m8rm"
-  //     }
+  //   "id": "c8be70f8-6722-4bac-bfaa-504a24ac7082",
+  //   "name": "My Custom Charge Name",
+  //   "unit": "msats",
+  //   "amount": "10000",
+  //   "createdAt": "2020-02-19T01:45:49.110Z",
+  //   "internalId": "11af01d092444a317cb33faa6b8304b8",
+  //   "callbackUrl": "http://your-website.com/callback",
+  //   "description": "My Custom Charge Description",
+  //   "status": "pending",
+  //   "invoice": {
+  //       "request": "lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c",
+  //       "expiresAt": "2020-02-19T01:50:49.059Z"
   //   }
   // }
 
@@ -84,31 +81,30 @@ try {
 
 ```js
 // Import the `getCharge` method
-import { getCharge } from 'zebedee-nodejs';
+import { getChargeDetails } from 'zebedee-nodejs';
 
 // Get Charge ID
-const chargeId = 'e4e2afc8-f469-4d4d-aeba-8c25957134ad';
+const chargeId = 'c8be70f8-6722-4bac-bfaa-504a24ac7082';
 
 // Get Charge Details
 try {
-  const response = await getCharge(chargeId);
+  const response = await getChargeDetails(chargeId);
 
   // Response Example
+  //
   // {
-  //   "message": "Successfully retrieved Charge.",
-  //   "data": {
-  //     "id": "e4e2afc8-f469-4d4d-aeba-8c25957134ad",
-  //     "name": "My New Charge",
-  //     "description": "My New Charge",
-  //     "createdAt": "2020-01-06T15:21:30.437Z",
-  //     "callbackUrl": "http://localhost/callback",
-  //     "internalId": "3451818",
-  //     "amount": "5000",
-  //     "status": "completed",
-  //     "invoice": {
-  //       "expiresAt": "2020-01-06T15:31:30.442Z",
-  //       "request": "lnbc50n1p0px5r6pp5f2zlacfd974742r5w6tnp66jch6u38nz03gy82xuzrczuc4cywqsdq4f4ujqnn9wusyx6rpwfnk2cqzpgxqzjc9qy9qsqsp57xlerer20wufen50grclt3np5rm640yfve72mvaqu096pthtt8vqjj0pvpfxft4nmqxx3w6klsw80f625qfdkveedehur8wumgkzq9lsz6z5tk9afsnnuzusd2qtrczkuyu9sn8c30f3ldg584y6a2mhvfgqc3m8rm"
-  //     }
+  //   "id": "c8be70f8-6722-4bac-bfaa-504a24ac7082",
+  //   "name": "My Custom Charge Name",
+  //   "unit": "msats",
+  //   "amount": "10000",
+  //   "createdAt": "2020-02-19T01:45:49.110Z",
+  //   "internalId": "11af01d092444a317cb33faa6b8304b8",
+  //   "callbackUrl": "http://your-website.com/callback",
+  //   "description": "My Custom Charge Description",
+  //   "status": "pending",
+  //   "invoice": {
+  //       "request": "lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c",
+  //       "expiresAt": "2020-02-19T01:50:49.059Z"
   //   }
   // }
 
@@ -125,11 +121,11 @@ import { createWithdrawalRequest } from 'zebedee-nodejs';
 
 // Set the payload
 const payload = {
-  amount: 5000,
-  name: 'Optional Name',
-  internalId: 'YOUR INTERNAL SYSTEM\'S ID',
-  description: 'This is a Lightning charge',
-  callbackUrl: 'https://yourapp.com/zebedee-charge/callback',
+  expiresIn: 300,
+  amount: "50000",
+  internalId: '11af01d092444a317cb33faa6b8304b8',
+  description: 'My Custom Withdrawal Description',
+  callbackUrl: 'https://yourapp.com/callback',
 };
 
 // Create Withdrawal Request
@@ -137,16 +133,19 @@ try {
   const response = await createWithdrawalRequest(payload);
 
   // Example Response
+  //
   // {
-  //   "message": "Successfully created Withdrawal Request.",
-  //   "data": {
-  //     "id": "bedc9ac7-fd19-4b3d-bad5-66aa83120db6",
-  //     "fee": null,
-  //     "lnurl": "lnurl1dp68gup69uhkkmmwvukhzcfw0fjkyetyv4jjucmvda6kgw3cxqcrqtmkxqhhw6t5dpj8ycthv9kz6un9w96k2um5wvkhqcted3hkzeplwdjkxun9ws7nxdpj89jrsdtxxgckxvp3xq6nvctyxpjkzwphxuexzcm9xejnjvekxumxvwpcxg6rxvfcxf3nywfh8ymnxvrrx43ngwfkvgurqdtpxshffa9l",
-  //     "amount": "10000",
-  //     "status": "pending",
-  //     "internalId": "1234567890",
-  //     "description": "My Description"
+  //   "id": "547c8a36-44d8-40de-80a1-9ad745354a45",
+  //   "unit": "msats",
+  //   "amount": "50000",
+  //   "createdAt": "2020-02-19T01:43:57.485Z",
+  //   "internalId": "11af01d092444a317cb33faa6b8304b8",
+  //   "description": "My Custom Withdrawal Description",
+  //   "callbackUrl": "http://your-website.com/callback",
+  //   "status": "pending",
+  //   "invoice": {
+  //       "request": "lnurl1dp68gurn8ghj7cn9w3sj6ctsdyh85etzv4jx2efwd9hj7a3s9acxz7tvdaskgtthd96xserjv9mkzmpdwfjhzat9wd6r7um9vdex2apav3skxdfev93rwvm9x43nwcf5vvekgdmpxq6rgvrrxumnxdp3vserqe35v4jr2efs8y6k2epkxf3rxc35vg6nwdrpx9jrqv3kxfjxxwqxmuhcd",
+  //       "expiresAt": "2020-02-19T01:48:57.482Z"
   //   }
   // }
 } catch(error) {
@@ -162,14 +161,29 @@ import { makePayment } from 'zebedee-nodejs';
 
 // Set the payload
 const payload = {
-  invoice: 'lnbc1.....',
-  internalId: 'YOUR INTERNAL SYSTEM\'S ID',
+  invoice: 'lnbc10.....',
+  description: 'My New Description',
+  internalId: '11af01d092444a317cb33faa6b8304b8',
 };
 
 // Pay Invoice
 try {
   const response = await makePayment(payload);
   console.log({ response });
+
+  // Example Response
+  //
+  // {
+  //   "id": "2a0dc354-573f-4850-85f7-ab4a21e5143b",
+  //   "fee": "1000",
+  //   "unit": "msats",
+  //   "amount": "45000",
+  //   "invoice": "lnbc450n1p0yeytspp55yrs0j42wnkw0qutr8e0tgsf2yplxs9986t5gqmfpn7mfd0ckc8sdzq2pshjmt9de6zqen0wgsrgdfqwp5hsetvwvsxzapqwdshgmmndp5hxtnsd3skxefwxqzjccqp2sp5pyccqt6apxelz62d2ndrt0ssahndpcua4wklea80glaczx80t3wqrzjqfn4cln8jwe4dh4dmscddrmd6sdw6hzkn702l6ghwvr8lhad0ez5vzt8vyqqf2sqqqqqqqlgqqqqqqgq9q9qy9qsqqeft09gryr80aaghm7rmh7eeqfl7hxlcynp99730yk7qh534d9nyfwp0nc628rp8hpgp23fxzj5l2aet4y6sc4t79uj3wyjxffejmvgqrmxkvr",
+  //   "internalId": "11af01d092444a317cb33faa6b8304b8",
+  //   "processedAt": "2020-02-19T01:38:10.757Z",
+  //   "description": "My Custom Payment Description",
+  //   "status": "completed"
+  // }
 } catch(error) {
   console.log({ error });
 }
@@ -177,13 +191,9 @@ try {
 
 ## Webhooks
 
-Use the `callbackUrl` properties in the Charge and WithdrawalRequest payloads to receive webhook calls. These webhooks are invoked when your Charge/WithdrawalRequest succeeds, fails, or when it eventually expires.
+Use the `callbackUrl` properties in the `Charge` and `WithdrawalRequest` payloads to receive webhook calls. These webhooks are invoked when your Charge/WithdrawalRequest succeeds, fails, or when it eventually expires.
 
 Webhooks give you more access to these entities' lifecycle.
-
-## Examples
-
-For more detailed examples please refer to our [Examples](https://google.com) folder.
 
 ## Contributions
 
