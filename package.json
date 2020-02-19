@@ -1,6 +1,6 @@
 {
   "name": "zebedee-nodejs",
-  "version": "0.2.7",
+  "version": "0.2.9",
   "description": "NodeJS SDK for ZEBEDEE Bitcoin Lightning API",
   "license": "MIT",
   "main": "lib.js",
