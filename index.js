@@ -89,11 +89,15 @@ let zAPI: Object = null;
  * @returns {ErrorType} Error
  */
 const throwError = (error: Object): ErrorType => {
-  console.log({ error });
   const errorMessage = error.response.data.errorString;
+  const errorName = error.response.data.message;
+  const errorStatus = error.response.status;
+
   const errorObj: Object = new Error(errorMessage);
-  errorObj.name = error.message;
-  errorObj.status = error.status;
+
+  errorObj.name = errorName;
+  errorObj.status = errorStatus;
+  errorObj.message = errorMessage;
 
   return errorObj;
 };
