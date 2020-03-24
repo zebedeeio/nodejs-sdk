@@ -33,9 +33,7 @@
     "sdk"
   ],
   "dependencies": {
-    "acorn": "^5.7.4",
-    "axios": "^0.19.0",
-    "minimist": "^1.2.2"
+    "axios": "^0.19.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
