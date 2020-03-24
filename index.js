@@ -1,130 +1,40 @@
 // @flow
 import axios from 'axios';
+import { throwError, throwClientErr } from './utils/error';
+import {
+  API_URL,
+  WALLET_ENDPOINT,
+  CHARGES_ENDPOINT,
+  PAYMENTS_ENDPOINT,
+  WITHDRAWAL_REQUESTS_ENDPOINT,
+} from './constants/endpoints';
 
-// Constants
-const API_URL = 'https://beta-api.zebedee.io';
-
-// Endpoints
-const WALLET_ENDPOINT = '/v0/wallet';
-const CHARGES_ENDPOINT = '/v0/charges';
-const PAYMENTS_ENDPOINT = '/v0/payments';
-const WITHDRAWAL_REQUESTS_ENDPOINT = '/v0/withdrawal-requests';
-
-// Types
-type APIConfigurationType = {
-  apikey: string,
-};
-
-type ErrorResponseType = {
-  name: string,
-  status: number,
-  message: string,
-};
-
-type ErrorInputType = {
-  status: string,
-  response: Object,
-};
-
-type ChargeInputType = {
-  name: string,
-  amount: string,
-  internalId: string,
-  callbackUrl: string,
-  description: string,
-};
-
-type ChargeResponseType = {
-  id: string,
-  name: string,
-  unit: string,
-  amount: string,
-  status: string,
-  createdAt: string,
-  internalId: string,
-  callbackUrl: string,
-  description: string,
-  invoice: {
-    request: string,
-    expiresAt: string,
-  },
-};
-
-type WithdrawalRequestInputType = {
-  name: string,
-  amount: string,
-  internalId: string,
-  callbackUrl: string,
-  description: string,
-}
-
-type WithdrawalRequestResponseType = {
-  id: string,
-  name: string,
-  unit: string,
-  amount: string,
-  status: string,
-  createdAt: string,
-  internalId: string,
-  callbackUrl: string,
-  description: string,
-  invoice: {
-    request: string,
-    expiresAt: string,
-  },
-}
-
-type PaymentInputType = {
-  invoice: string,
-  internalId: string,
-  description: string,
-}
-
-type PaymentResponseType = {
-  id: string,
-  fee: string,
-  unit: string,
-  status: string,
-  amount: string,
-  invoice: string,
-  internalId: string,
-  processedAt: string,
-  description: string,
-}
-
-type WalletResponseType = {
-  balance: string,
-  unit: string,
-}
+import type {
+  APIConfigurationType,
+  ErrorResponseType,
+  ErrorInputType,
+  ChargeInputType,
+  ChargeResponseType,
+  WithdrawalRequestInputType,
+  WithdrawalRequestResponseType,
+  PaymentInputType,
+  PaymentResponseType,
+  WalletResponseType,
+} from './types';
 
 // Globals
 let zAPI: Object = null;
-
-/**
- * Utility for handling and formatting Errors
- * @param {ErrorInputType} error Errror
- * @returns {ErrorResponseType} Formatted Error
- */
-const throwError = (error: ErrorInputType): ErrorResponseType => {
-  const errorMessage = error.response.data.errorString;
-  const errorName = error.response.data.message;
-  const errorStatus = error.response.status;
-
-  const errorObj: Object = new Error(errorMessage);
-
-  errorObj.name = errorName;
-  errorObj.status = errorStatus;
-  errorObj.message = errorMessage;
-
-  return errorObj;
-};
 
 /**
  * Instantiates an Axios API instance connected to the ZEBEDEE API
  * @param {APIConfigurationType} apiConfig API Configuration Options
  * @returns {any} Axios API Instance
  */
-export const initAPI = ({ apikey = '' }: APIConfigurationType) => {
+export const initAPI = ({ apikey }: APIConfigurationType) => {
+  if(!apikey) {
+    throw throwClientErr('Missing required param: apiKey');
+  }
+
   // API Base URL
   const baseURL = API_URL;
 

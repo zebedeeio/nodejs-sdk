@@ -35,6 +35,13 @@ const apiOptions = { apiKey: 'XXXXXX' };
 initAPI(apiOptions);
 ```
 
+### Initialize API Params
+
+|Parameter|Type|Required|Default|Description
+|-|-|-|-|-
+|apiKey|*string*|Yes||The key provided to you to instantiate the api
+
+
 ## Creating Charge
 
 ```js
@@ -45,7 +52,7 @@ import { createCharge } from 'zebedee-nodejs';
 const payload = {
   expiresIn: 300,
   amount: "50000",
-  description: 'My Custom Charde Description',
+  description: 'My Custom Charge Description',
   callbackUrl: 'https://yourapp.com/callback',
   internalId: '11af01d092444a317cb33faa6b8304b8',
 };
@@ -58,7 +65,6 @@ try {
   //
   // {
   //   "id": "c8be70f8-6722-4bac-bfaa-504a24ac7082",
-  //   "name": "My Custom Charge Name",
   //   "unit": "msats",
   //   "amount": "10000",
   //   "createdAt": "2020-02-19T01:45:49.110Z",
@@ -69,6 +75,7 @@ try {
   //   "invoice": {
   //       "request": "lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c",
   //       "expiresAt": "2020-02-19T01:50:49.059Z"
+  //       "uri": "lightning:lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c"
   //   }
   // }
 
@@ -76,6 +83,16 @@ try {
   console.log({ error });
 }
 ```
+### Create Charge Params
+
+|Attribute|Type|Required|Default|Description
+|-|-|-|-|-
+|expiresIn|*number*|No|300|The desired expiration time for this Charge (in seconds).
+|amount|*string*|Yes||The Charge amount (in millisatoshis).
+|description|*string*|No|"ZEBEDEE CHARGE"|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
+|callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
+|internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+
 
 ## Get Charge Details
 
@@ -94,7 +111,6 @@ try {
   //
   // {
   //   "id": "c8be70f8-6722-4bac-bfaa-504a24ac7082",
-  //   "name": "My Custom Charge Name",
   //   "unit": "msats",
   //   "amount": "10000",
   //   "createdAt": "2020-02-19T01:45:49.110Z",
@@ -104,7 +120,8 @@ try {
   //   "status": "pending",
   //   "invoice": {
   //       "request": "lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c",
-  //       "expiresAt": "2020-02-19T01:50:49.059Z"
+  //       "expiresAt": "2020-02-19T01:50:49.059Z",
+        // "uri": "lightning:lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c"
   //   }
   // }
 
@@ -112,6 +129,13 @@ try {
   console.log({ error });
 }
 ```
+### Get Charge Params
+
+|Attribute|Type|Required|Default|Description
+|-|-|-|-|-
+|chargeId|*string*|YES||The chargeId for the Charge.
+
+
 
 ## Creating Withdrawal Request
 
@@ -123,9 +147,9 @@ import { createWithdrawalRequest } from 'zebedee-nodejs';
 const payload = {
   expiresIn: 300,
   amount: "50000",
-  internalId: '11af01d092444a317cb33faa6b8304b8',
   description: 'My Custom Withdrawal Description',
   callbackUrl: 'https://yourapp.com/callback',
+  internalId: '11af01d092444a317cb33faa6b8304b8',
 };
 
 // Create Withdrawal Request
@@ -152,6 +176,16 @@ try {
   console.log({ error });
 }
 ```
+### Withdraw Request Params
+
+|Attribute|Type|Required|Default|Description
+|-|-|-|-|-
+|expiresIn|*number*|No|300|The desired expiration time for this Charge (in seconds).
+|amount|*string*|Yes||The Charge amount (in millisatoshis).
+|description|*string*|No|"ZEBEDEE WITHDRAWAL"|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
+|callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
+|internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+
 
 ## Making Payment
 
@@ -164,6 +198,7 @@ const payload = {
   invoice: 'lnbc10.....',
   description: 'My New Description',
   internalId: '11af01d092444a317cb33faa6b8304b8',
+  callbackUrl: 'https://myapp.com/callback',
 };
 
 // Pay Invoice
@@ -188,6 +223,17 @@ try {
   console.log({ error });
 }
 ```
+
+### Make Payment Params
+
+|Attribute|Type|Required|Default|Description
+|-|-|-|-|-
+|invoice|*string*|Yes||The Lightning invoice that is meant to be paid.
+|description|*string*|No|"ZEBEDEE PAYMENT"|The Payment description (only used for internal record-keeping).
+|callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Payment's status updates.
+|internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+
+
 
 ## Webhooks
 
