@@ -46,9 +46,12 @@ initAPI(apiOptions);
 ## Get Wallet Details
 
 ```js
+// Import the `getWalletDetails` method
+import { getWalletDetails } from 'zebedee-nodejs';
+
   // Get Wallet Details
   try {
-    const response = await getAllCharges();
+    const response = await getWalletDetails();
 
     // Response Example
     // {
@@ -64,9 +67,12 @@ initAPI(apiOptions);
 ## Get All Charges
 
 ```js
+// Import the `getAllCharges` method
+  import { getAllCharges } from 'zebedee-nodejs';
+
   // Get All Charges
   try {
-    const response = await getWalletDetails();
+    const response = await getAllCharges();
 
     // Response Example
     // [
@@ -163,7 +169,7 @@ try {
 ## Get Charge Details
 
 ```js
-// Import the `getCharge` method
+// Import the `getChargeDetails` method
 import { getChargeDetails } from 'zebedee-nodejs';
 
 // Get Charge ID
@@ -205,6 +211,9 @@ try {
 ## Get All Withdrawal Requests
 
 ```js
+  // Import the `getAllWithdrawalRequests` method
+  import { getAllWithdrawalRequests } from 'zebedee-nodejs';
+
   // Get All Withdrawal Requests
   try {
     const response = await getAllWithdrawalRequests();
@@ -301,6 +310,9 @@ try {
 ## Get Withdrawal Request Details
 
 ```js
+  // Import the `getWithdrawalRequestDetails` method
+  import { getWithdrawalRequestDetails } from 'zebedee-nodejs';
+
   const withdrawalRequestId = '80d65490-ebf6-46ae-8371-d85b1ee74dc2';
 
   // Get Withdrawal Request Details
@@ -340,6 +352,9 @@ try {
 ## Get All Payments
 
 ```js
+  // Import the `getAllPayments` method
+  import { getAllPayments } from 'zebedee-nodejs';
+
   // Get All Payments
   try {
     const response = await getAllPayments();
@@ -423,7 +438,10 @@ try {
 
 ```js
 
- const paymentId = 'a15a3fbc-a9dc-493a-8497-1e428cf9c1ba';
+// Import the `getPaymentDetails` method
+  import { getPaymentDetails } from 'zebedee-nodejs';
+
+  const paymentId = 'a15a3fbc-a9dc-493a-8497-1e428cf9c1ba';
 
   // Get Withdrawal Request Details
   try {
