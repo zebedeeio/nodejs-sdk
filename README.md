@@ -45,6 +45,8 @@ initAPI(apiOptions);
 
 ## Get Wallet Details
 
+Retrieves wallet information including total balance.
+
 ```js
 // Import the `getWalletDetails` method
 import { getWalletDetails } from 'zebedee-nodejs';
@@ -65,6 +67,8 @@ try {
 ----
 
 ## Get All Charges
+
+Retrieves all Charges created by this Key.
 
 ```js
 // Import the `getAllCharges` method
@@ -115,6 +119,8 @@ try {
 ```
 ----
 ## Creating Charge
+
+Creates a new Charge with an Lightning Invoice attached to it.
 
 ```js
 // Import the `createCharge` method
@@ -168,6 +174,8 @@ try {
 ----
 ## Get Charge Details
 
+Retrieves all the information related to a specific Charge.
+
 ```js
 // Import the `getChargeDetails` method
 import { getChargeDetails } from 'zebedee-nodejs';
@@ -209,6 +217,8 @@ try {
 
 ----
 ## Get All Withdrawal Requests
+
+Retrieves all Withdrawal Requests
 
 ```js
 // Import the `getAllWithdrawalRequests` method
@@ -258,6 +268,8 @@ try {
 ----
 ## Creating Withdrawal Request
 
+Creates a Withdrawal Request with an attached LNURL code.
+
 ```js
 // Import the `createWithdrawalRequest` method
 import { createWithdrawalRequest } from 'zebedee-nodejs';
@@ -306,8 +318,12 @@ try {
 |description|*string*|No|"ZEBEDEE WITHDRAWAL"|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
 |callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
 |internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+
 ----
+
 ## Get Withdrawal Request Details
+
+Retrieves information on a specific withdrawal request
 
 ```js
 // Import the `getWithdrawalRequestDetails` method
@@ -339,7 +355,6 @@ try {
 }
 ```
 
-
 ### Get Withdraw Request Details Params
 
 |Attribute|Type|Required|Default|Description
@@ -349,6 +364,8 @@ try {
 ----
 
 ## Get All Payments
+
+Retrieves all the Payments created by this key.
 
 ```js
 // Import the `getAllPayments` method
@@ -385,7 +402,10 @@ try {
 ```
 
 ----
+
 ## Making Payment
+
+Pays a Lightning Invoice.
 
 ```js
 // Import the `makePayment` method
@@ -434,6 +454,8 @@ try {
 ----
 
 ## Get Payment Details
+
+Retrieves all the information related to a specific Payment.
 
 ```js
 // Import the `getPaymentDetails` method
