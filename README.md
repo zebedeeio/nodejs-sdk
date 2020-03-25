@@ -41,7 +41,73 @@ initAPI(apiOptions);
 |-|-|-|-|-
 |apiKey|*string*|Yes||The key provided to you to instantiate the api
 
+----
 
+## Get Wallet Details
+
+```js
+  // Get Wallet Details
+  try {
+    const response = await getAllCharges();
+
+    // Response Example
+    // {
+    //   "unit": "msats",
+    //   "balance": "1000000"
+    // }
+  } catch(error) {
+    console.log({ error });
+  }
+```
+----
+
+## Get All Charges
+
+```js
+  // Get All Charges
+  try {
+    const response = await getWalletDetails();
+
+    // Response Example
+    // [
+    //     {
+    //         "id": "c121356b-9671-4fbd-a751-987fb4b3d0b3",
+    //         "description": "Description of the Charge",
+    //         "createdAt": "2019-12-23T03:58:17.993Z",
+    //         "callbackUrl": "http://localhost/callback",
+    //         "internalId": "3451818",
+    //         "amount": "2000",
+    //         "status": "pending",
+    //         "invoice": {
+    //             "expiresAt": "2019-12-23T04:08:18.038Z",
+    //             "request": "lnbc20n1p0qqw66pp5lhjn2sshvh03h2lsxyzg5eyfwt0760207q3hake25fs7l3psegtqdpgg3jhxcmjd9c8g6t0dcsx7e3qw35x2gzrdpshyem9cqzpgxqzjcfppjramjf8sxnvy3k8dq84kv56dy5gq9mlqs9qy9qsqsp5jvf69w282jdxkyt824dn0crxdentx8nvncfdt0ulqp75lvkjpagqqwpgcttpmfzaxc3akfn85jlu8cmtv5l2hu8q3yqttru8vlryg3vnewssy8w00yyfsghzqj03j45kj3uhhjek6q6e8djfu5u4gna6wjcqdsdhwe",
+    //             "uri": "lightning:lnbc20n1p0qqw66pp5lhjn2sshvh03h2lsxyzg5eyfwt0760207q3hake25fs7l3psegtqdpgg3jhxcmjd9c8g6t0dcsx7e3qw35x2gzrdpshyem9cqzpgxqzjcfppjramjf8sxnvy3k8dq84kv56dy5gq9mlqs9qy9qsqsp5jvf69w282jdxkyt824dn0crxdentx8nvncfdt0ulqp75lvkjpagqqwpgcttpmfzaxc3akfn85jlu8cmtv5l2hu8q3yqttru8vlryg3vnewssy8w00yyfsghzqj03j45kj3uhhjek6q6e8djfu5u4gna6wjcqdsdhwe"
+    //         }
+    //     },
+    //     {
+    //         "id": "562dc6c2-ccf9-4e54-b680-7e7c49874736",
+    //         "description": "Description of the Charge",
+    //         "createdAt": "2019-12-23T04:13:50.578Z",
+    //         "callbackUrl": "http://localhost/callback",
+    //         "internalId": "3451818",
+    //         "amount": "6000",
+    //         "status": "completed",
+    //         "invoice": {
+    //             "expiresAt": "2019-12-23T04:23:50.724Z",
+    //             "request": "lnbc60n1p0qq0h7pp5zrql5vkpn6507qffyt370eacp2pkedgx705h23yhsh0m0tkjyh2sdpgg3jhxcmjd9c8g6t0dcsx7e3qw35x2gzrdpshyem9cqzpgxqzjcfppjlq5hes6q5vvk904hku52e0a08hks64q89qy9qsqsp5ecnz3zm7ls3zkud3ppg3jg7l8h0ktesn4ru4mv6thrfke5fekcnqehgjsl8yqmumwj9f34dt82cad9tyww9xashl7c7r638tvv3pe8sspjkc5fqc8uyhadyh5gwj5az0xslhlhrd2q6gw9m9vvt6p9pfudqprdy7ks",
+    //             "uri": "lightning:lnbc60n1p0qq0h7pp5zrql5vkpn6507qffyt370eacp2pkedgx705h23yhsh0m0tkjyh2sdpgg3jhxcmjd9c8g6t0dcsx7e3qw35x2gzrdpshyem9cqzpgxqzjcfppjlq5hes6q5vvk904hku52e0a08hks64q89qy9qsqsp5ecnz3zm7ls3zkud3ppg3jg7l8h0ktesn4ru4mv6thrfke5fekcnqehgjsl8yqmumwj9f34dt82cad9tyww9xashl7c7r638tvv3pe8sspjkc5fqc8uyhadyh5gwj5az0xslhlhrd2q6gw9m9vvt6p9pfudqprdy7ks"
+    //         }
+    //     },
+    //     { ... },
+    //     { ... },
+    //     { ... },
+    //     { ... }
+    // ]
+  } catch(error) {
+    console.log({ error });
+  }
+```
+----
 ## Creating Charge
 
 ```js
@@ -93,7 +159,7 @@ try {
 |callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
 |internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
 
-
+----
 ## Get Charge Details
 
 ```js
@@ -135,8 +201,52 @@ try {
 |-|-|-|-|-
 |chargeId|*string*|YES||The chargeId for the Charge.
 
+----
+## Get All Withdrawal Requests
 
+```js
+  // Get All Withdrawal Requests
+  try {
+    const response = await getAllWithdrawalRequests();
 
+    // Response Example
+    // [
+    //     {
+    //         "id": "80d65490-ebf6-46ae-8371-d85b1ee74dc2",
+    //         "amount": "1000",
+    //         "status": "pending",
+    //         "internalId": "1234567890",
+    //         "description": "My Description",
+    //         "callbackUrl": "https://localhost/callback",
+    //         "createdAt": "2019-12-23T03:58:17.993Z",
+    //         "invoice": {
+    //             "request": "lnurl1dp68gup69uhkkmmwvukhzcfw0fjkyetyv4jjucmvda6kgw3cxqcrqtmkxqhhw6t5dpj8ycthv9kz6un9w96k2um5wvkhqcted3hkzeplwdjkxun9ws7nwc34vsenwvf5xymnqvpjxf3nxcnrx33nzc3cx5cnzdmyvcenydesv56kyerxxv6kgcenv4skyvnyx5ckzepjvgurgcmxv56rjep5vs30e289",
+    //             "expiresAt": "2019-12-23T04:08:18.038Z",
+    //             "uri": "lightning:lnurl1dp68gup69uhkkmmwvukhzcfw0fjkyetyv4jjucmvda6kgw3cxqcrqtmkxqhhw6t5dpj8ycthv9kz6un9w96k2um5wvkhqcted3hkzeplwdjkxun9ws7nwc34vsenwvf5xymnqvpjxf3nxcnrx33nzc3cx5cnzdmyvcenydesv56kyerxxv6kgcenv4skyvnyx5ckzepjvgurgcmxv56rjep5vs30e289"
+    //         }
+    //     },
+    //     {
+    //         "id": "80d65490-ebf6-46ae-8371-d85b1ee74dc2",
+    //         "amount": "1000",
+    //         "status": "pending",
+    //         "internalId": "1234567890",
+    //         "description": "My Description",
+    //         "callbackUrl": "https://localhost/callback",
+    //         "createdAt": "2019-12-23T03:58:17.993Z",
+    //         "invoice": {
+    //             "request": "lnurl1dp68gup69uhkkmmwvukhzcfw0fjkyetyv4jjucmvda6kgw3cxqcrqtmkxqhhw6t5dpj8ycthv9kz6un9w96k2um5wvkhqcted3hkzeplwdjkxun9ws7nwc34vsenwvf5xymnqvpjxf3nxcnrx33nzc3cx5cnzdmyvcenydesv56kyerxxv6kgcenv4skyvnyx5ckzepjvgurgcmxv56rjep5vs30e289",
+    //             "expiresAt": "2019-12-23T04:08:18.038Z",
+    //             "uri": "lightning:lnurl1dp68gup69uhkkmmwvukhzcfw0fjkyetyv4jjucmvda6kgw3cxqcrqtmkxqhhw6t5dpj8ycthv9kz6un9w96k2um5wvkhqcted3hkzeplwdjkxun9ws7nwc34vsenwvf5xymnqvpjxf3nxcnrx33nzc3cx5cnzdmyvcenydesv56kyerxxv6kgcenv4skyvnyx5ckzepjvgurgcmxv56rjep5vs30e289"
+    //         }
+    //     },
+    //     { ... },
+    //     { ... },
+    // ]
+  } catch(error) {
+    console.log({ error });
+  }
+```
+----
 ## Creating Withdrawal Request
 
 ```js
@@ -176,7 +286,9 @@ try {
   console.log({ error });
 }
 ```
-### Withdraw Request Params
+
+
+### Create Withdraw Request Params
 
 |Attribute|Type|Required|Default|Description
 |-|-|-|-|-
@@ -185,8 +297,80 @@ try {
 |description|*string*|No|"ZEBEDEE WITHDRAWAL"|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
 |callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
 |internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+----
+## Get Withdrawal Request Details
+
+```js
+  const withdrawalRequestId = '80d65490-ebf6-46ae-8371-d85b1ee74dc2';
+
+  // Get Withdrawal Request Details
+  try {
+    const response = await getWithdrawalRequestDetails(withdrawalRequestId);
+
+    // Response Example
+    // {
+    //     "id": "80d65490-ebf6-46ae-8371-d85b1ee74dc2",
+    //     "amount": "1000",
+    //     "status": "pending",
+    //     "internalId": "1234567890",
+    //     "description": "My Description",
+    //     "callbackUrl": "https://localhost/callback",
+    //     "createdAt": "2019-12-23T03:58:17.993Z",
+    //     "invoice": {
+    //         "request": "lnurl1dp68gup69uhkkmmwvukhzcfw0fjkyetyv4jjucmvda6kgw3cxqcrqtmkxqhhw6t5dpj8ycthv9kz6un9w96k2um5wvkhqcted3hkzeplwdjkxun9ws7nwc34vsenwvf5xymnqvpjxf3nxcnrx33nzc3cx5cnzdmyvcenydesv56kyerxxv6kgcenv4skyvnyx5ckzepjvgurgcmxv56rjep5vs30e289",
+    //         "expiresAt": "2019-12-23T04:08:18.038Z",
+    //         "uri": "lightning:lnurl1dp68gup69uhkkmmwvukhzcfw0fjkyetyv4jjucmvda6kgw3cxqcrqtmkxqhhw6t5dpj8ycthv9kz6un9w96k2um5wvkhqcted3hkzeplwdjkxun9ws7nwc34vsenwvf5xymnqvpjxf3nxcnrx33nzc3cx5cnzdmyvcenydesv56kyerxxv6kgcenv4skyvnyx5ckzepjvgurgcmxv56rjep5vs30e289"
+    //     }
+    // }
+  } catch (error) {
+    console.log({ error });
+  }
+
+```
 
 
+### Get Withdraw Request Details Params
+
+|Attribute|Type|Required|Default|Description
+|-|-|-|-|-
+|withdrawalRequestId|*string*|Yes||The id of the withdraw request.
+
+----
+
+## Get All Payments
+
+```js
+  // Get All Payments
+  try {
+    const response = await getAllPayments();
+
+    // Response Example
+    // [
+    //   {
+    //     "id": "a15a3fbc-a9dc-493a-8497-1e428cf9c1ba",
+    //     "fee": "1000",
+    //     "amount": "1000",
+    //     "description": "My Payment Description",
+    //     "updatedAt": "2020-01-01T20:27:29.896Z",
+    //     "processedAt": "2020-01-01T20:27:29.896Z"
+    //   },
+    //   {
+    //       "id": "d3fw3fbc-c2dc-393a-8s37-f28s8cf9c15b",
+    //       "fee": "1000",
+    //       "amount": "20001",
+    //       "description": "My Payment Description2",
+    //       "updatedAt": "2020-01-01T20:27:29.896Z",
+    //       "processedAt": "2020-01-01T20:27:29.896Z"
+    //   },
+    //   { ... },
+    //   { ... },
+    // ]
+  } catch(error) {
+    console.log({ error });
+  }
+```
+
+----
 ## Making Payment
 
 ```js
@@ -233,7 +417,40 @@ try {
 |callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Payment's status updates.
 |internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
 
+----
 
+## Get Payment Details
+
+```js
+
+ const paymentId = 'a15a3fbc-a9dc-493a-8497-1e428cf9c1ba';
+
+  // Get Withdrawal Request Details
+  try {
+    const response = await getPaymentDetails(paymentId);
+
+    // Response Example
+    // {
+    //     "id": "a15a3fbc-a9dc-493a-8497-1e428cf9c1ba",
+    //     "fee": "1000",
+    //     "amount": "1000",
+    //     "description": "My Payment Description",
+    //     "updatedAt": "2020-01-01T20:27:29.896Z",
+    //     "processedAt": "2020-01-01T20:27:29.896Z"
+    // }
+  } catch (error) {
+    console.log({ error });
+  }
+
+```
+
+### Get Payment Details Params
+
+|Attribute|Type|Required|Default|Description
+|-|-|-|-|-
+|paymentId|*string*|Yes||The id of the payment.
+
+----
 
 ## Webhooks
 
@@ -244,7 +461,3 @@ Webhooks give you more access to these entities' lifecycle.
 ## Contributions
 
 ZEBEDEE is a big proponent of Open Source Software. We welcome PRs and contributions to the SDK and will try to review issues and PRs as soon as we can.
-
-
-
-
