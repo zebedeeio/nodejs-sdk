@@ -22,7 +22,7 @@ or
 yarn add zebedee-nodejs
 ```
 
-Below you can find detailed examples of the many methods available to you through the NodeJS SDK.
+That is all! You are now ready to hit the ground running adding Bitcoin Lightning microtransactions in your game or application server. Follow the examples below to get started. You will find detailed snippets of the many methods available to you through the NodeJS SDK.
 
 ## API Initialization
 
