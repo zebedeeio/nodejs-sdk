@@ -203,7 +203,7 @@ try {
   //   "invoice": {
   //       "request": "lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c",
   //       "expiresAt": "2020-02-19T01:50:49.059Z",
-        // "uri": "lightning:lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c"
+  //       "uri": "lightning:lnbc100n1p0yey6dpp5fnutjajv9jjv78vpad370rrqzxufqxk3fk2r3m6mk5fxpapq0v8qdpdf4ujqsm4wd6x7mfqgd5xzun8v5sygetnvdexjur5d9hkucqzpgxqzfvsp5rr6v38qxwqu0tnsh5aaqg6kf5k4w8k68n5cpxklr8trdawpytfcs9qy9qsqkxpafcvqgkjvtka0jplgfzumgl7csc7q455au09ucm3q948dey5nvysnpj3vqnvnnqvpz0l2jehlxpzq9d0mqd2vr7x60xd7dpmddkspke8a9c"
   //   }
   // }
 
@@ -215,7 +215,7 @@ try {
 
 |Attribute|Type|Required|Default|Description
 |-|-|-|-|-
-|chargeId|*string*|YES||The chargeId for the Charge.
+|chargeId|*string*|YES||The ID for the Charge.
 
 ----
 ## Get All Withdrawal Requests
@@ -303,6 +303,7 @@ try {
   //   "invoice": {
   //       "request": "lnurl1dp68gurn8ghj7cn9w3sj6ctsdyh85etzv4jx2efwd9hj7a3s9acxz7tvdaskgtthd96xserjv9mkzmpdwfjhzat9wd6r7um9vdex2apav3skxdfev93rwvm9x43nwcf5vvekgdmpxq6rgvrrxumnxdp3vserqe35v4jr2efs8y6k2epkxf3rxc35vg6nwdrpx9jrqv3kxfjxxwqxmuhcd",
   //       "expiresAt": "2020-02-19T01:48:57.482Z"
+  //       "uri": "lightning:lnurl1dp68gurn8ghj7cn9w3sj6ctsdyh85etzv4jx2efwd9hj7a3s9acxz7tvdaskgtthd96xserjv9mkzmpdwfjhzat9wd6r7um9vdex2apav3skxdfev93rwvm9x43nwcf5vvekgdmpxq6rgvrrxumnxdp3vserqe35v4jr2efs8y6k2epkxf3rxc35vg6nwdrpx9jrqv3kxfjxxwqxmuhcd",
   //   }
   // }
 } catch(error) {
@@ -315,17 +316,17 @@ try {
 
 |Attribute|Type|Required|Default|Description
 |-|-|-|-|-
-|expiresIn|*number*|No|300|The desired expiration time for this Charge (in seconds).
-|amount|*string*|Yes||The Charge amount (in millisatoshis).
-|description|*string*|No|"ZEBEDEE WITHDRAWAL"|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
-|callbackUrl|*string*|No|`null`|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
-|internalId|*string*|No|`null`|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+|expiresIn|*number*|No|300|The desired expiration time for this Withdrawal Request (in seconds).
+|amount|*string*|Yes||The Withdrawal Request amount (in millisatoshis).
+|description|*string*|No|ZEBEDEE Withdrawal Request|The Withdrawal Request description (also applied as the description to the associated BOLT11 Lightning invoice).
+|callbackUrl|*string*|No|`null`|The URL ZEBEDEE services will make a POST HTTP request to with information about the Withdrawal Request's status updates.
+|internalId|*string*|No|`null`|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Withdrawal Requests to specific Players.
 
 ----
 
 ## Get Withdrawal Request Details
 
-Retrieves information on a specific withdrawal request
+Retrieves information on a specific Withdrawal Request
 
 ```js
 // Import the `getWithdrawalRequestDetails` method
@@ -361,13 +362,13 @@ try {
 
 |Attribute|Type|Required|Default|Description
 |-|-|-|-|-
-|withdrawalRequestId|*string*|Yes||The id of the withdraw request.
+|withdrawalRequestId|*string*|Yes||The ID of the Withdrawal Request.
 
 ----
 
 ## Get All Payments
 
-Retrieves all the Payments created by this key.
+Retrieves all Payments created by this Key.
 
 ```js
 // Import the `getAllPayments` method
@@ -388,12 +389,12 @@ try {
   //     "processedAt": "2020-01-01T20:27:29.896Z"
   //   },
   //   {
-  //       "id": "d3fw3fbc-c2dc-393a-8s37-f28s8cf9c15b",
-  //       "fee": "1000",
-  //       "amount": "20001",
-  //       "description": "My Payment Description2",
-  //       "updatedAt": "2020-01-01T20:27:29.896Z",
-  //       "processedAt": "2020-01-01T20:27:29.896Z"
+  //     "id": "d3fw3fbc-c2dc-393a-8s37-f28s8cf9c15b",
+  //     "fee": "1000",
+  //     "amount": "20001",
+  //     "description": "My Payment Description2",
+  //     "updatedAt": "2020-01-01T20:27:29.896Z",
+  //     "processedAt": "2020-01-01T20:27:29.896Z"
   //   },
   //   { ... },
   //   { ... },
@@ -405,7 +406,7 @@ try {
 
 ----
 
-## Making Payment
+## Making a Payment
 
 Pays a Lightning Invoice.
 
@@ -451,7 +452,7 @@ try {
 |invoice|*string*|Yes||The Lightning invoice that is meant to be paid.
 |description|*string*|No|"ZEBEDEE PAYMENT"|The Payment description (only used for internal record-keeping).
 |callbackUrl|*string*|No|`null`|The URL ZEBEDEE services will make a POST HTTP request to with information about the Payment's status updates.
-|internalId|*string*|No|`null`|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+|internalId|*string*|No|`null`|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Payments to specific Players.
 
 ----
 
@@ -487,7 +488,7 @@ try {
 
 |Attribute|Type|Required|Default|Description
 |-|-|-|-|-
-|paymentId|*string*|Yes||The id of the payment.
+|paymentId|*string*|Yes||The ID of the Payment.
 
 ----
 
