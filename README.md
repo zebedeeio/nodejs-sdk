@@ -2,11 +2,11 @@
 
 [![npm version](https://badge.fury.io/js/zebedee-nodejs.svg)](https://badge.fury.io/js/zebedee-nodejs)
 
-ZEBEDEE NodeJS SDK to integrate Bitcoin Lightning microtransactions into your game server or application server with ease. 
+ZEBEDEE NodeJS SDK to integrate Bitcoin Lightning microtransactions into your game server or application server with ease.
 
 ## Documentation
 
-For detailed information about the endpoints available in the ZEBEDEE platform please refer to our [Documentation Website](https://beta-docs.zebedee.io).
+For detailed information about the endpoints available in the ZEBEDEE platform please refer to our [Documentation Website](https://documentation.zebedee.io) or the [RESTful API Reference Website](https://beta-docs.zebedee.io).
 
 ## Installation
 
@@ -21,6 +21,8 @@ or
 ```
 yarn add zebedee-nodejs
 ```
+
+Below you can find detailed examples of the many methods available to you through the NodeJS SDK.
 
 ## API Initialization
 
