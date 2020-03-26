@@ -122,7 +122,7 @@ try {
 ----
 ## Creating Charge
 
-Creates a new Charge with an Lightning Invoice attached to it.
+Creates a new Charge with a Lightning Invoice attached to it.
 
 ```js
 // Import the `createCharge` method
@@ -169,9 +169,9 @@ try {
 |-|-|-|-|-
 |expiresIn|*number*|No|300|The desired expiration time for this Charge (in seconds).
 |amount|*string*|Yes||The Charge amount (in millisatoshis).
-|description|*string*|No|"ZEBEDEE CHARGE"|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
-|callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
-|internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+|description|*string*|No|ZEBEDEE Charge|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
+|callbackUrl|*string*|No|`null`|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
+|internalId|*string*|No|`null`|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
 
 ----
 ## Get Charge Details
@@ -318,8 +318,8 @@ try {
 |expiresIn|*number*|No|300|The desired expiration time for this Charge (in seconds).
 |amount|*string*|Yes||The Charge amount (in millisatoshis).
 |description|*string*|No|"ZEBEDEE WITHDRAWAL"|The Charge description (also applied as the description to the associated BOLT11 Lightning invoice).
-|callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
-|internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+|callbackUrl|*string*|No|`null`|The URL ZEBEDEE services will make a POST HTTP request to with information about the Charges's status updates.
+|internalId|*string*|No|`null`|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
 
 ----
 
@@ -450,8 +450,8 @@ try {
 |-|-|-|-|-
 |invoice|*string*|Yes||The Lightning invoice that is meant to be paid.
 |description|*string*|No|"ZEBEDEE PAYMENT"|The Payment description (only used for internal record-keeping).
-|callbackUrl|*string*|No|empty / NULL|The URL ZEBEDEE services will make a POST HTTP request to with information about the Payment's status updates.
-|internalId|*string*|No|empty / NULL|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
+|callbackUrl|*string*|No|`null`|The URL ZEBEDEE services will make a POST HTTP request to with information about the Payment's status updates.
+|internalId|*string*|No|`null`|An optional free-use attribute. Usually used by setting the Player/User ID of your Game/Application in order to link specific Charges to specific Players.
 
 ----
 
