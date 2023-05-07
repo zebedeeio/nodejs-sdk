@@ -1,3 +1,12 @@
+# DEPRECATED
+
+# THIS SDK HAS BEEN DEPRECATED IN FAVOR OF `@zbd/node` NODEJS LIBRARY FOR ZEBEDEE API
+
+# [@zbd/node](https://github.com/zebedeeio/zbd-node)
+
+-------------------------------
+
+
 # ZEBEDEE NodeJS SDK
 
 [![npm version](https://badge.fury.io/js/zebedee-nodejs.svg)](https://badge.fury.io/js/zebedee-nodejs)
